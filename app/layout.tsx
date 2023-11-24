@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -30,6 +31,7 @@ export default function RootLayout({
             storageKey="hola"
             disableTransitionOnChange
           >
+            <Toaster position="bottom-center" />
             <main>{children}</main>
           </ThemeProvider>
         </ConvexClientProvider>
