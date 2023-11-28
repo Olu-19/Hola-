@@ -10,7 +10,7 @@ import { api } from "@/convex/_generated/api";
 
 import { cn } from "@/lib/utils";
 
-import { Item } from "./item";
+import { Item } from "../../../components/item";
 
 interface DocumentListProps {
     parentDocumentId?: Id<"documents">;
@@ -42,7 +42,7 @@ export const DocumentList = ({ parentDocumentId, level = 0 }: DocumentListProps)
     // A function to redirect to a specific document.
 
     const onRedirect = (documentId: string) => {
-        router.push(`/document/${documentId}`)
+        router.push(`/documents/${documentId}`)
     };
 
     // Return a loading state if the documents are undefined.

@@ -5,8 +5,10 @@ import "./globals.css";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 import { cn } from "@/lib/utils";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -24,16 +26,19 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn(font.className)}>
         <ConvexClientProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            storageKey="hola"
-            disableTransitionOnChange
-          >
-            <Toaster position="bottom-center" />
-            <main>{children}</main>
-          </ThemeProvider>
+          <EdgeStoreProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              storageKey="hola"
+              disableTransitionOnChange
+            >
+              <Toaster position="bottom-center" />
+              <ModalProvider />
+                <main>{children}</main>
+            </ThemeProvider>
+            </EdgeStoreProvider>
         </ConvexClientProvider>
       </body>
     </html>

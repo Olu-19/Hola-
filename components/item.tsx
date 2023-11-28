@@ -28,7 +28,7 @@ interface ItemProps {
     isSearch?: boolean;
     level?: number;
     onExpand?: () => void;
-    onClick: () => void;
+    onClick?: () => void;
     label: string;
     icon: LucideIcon;
 }
@@ -67,10 +67,10 @@ export const Item = ({
     
     const promise = create({ title: "Untitled", parentDocument: id })
       .then((documentId) => {
-        if (!documentId) {
+        if (!expanded) {
           onExpand?.();
         }
-        // router.push(`/documents/${documentId}`)
+        router.push(`/documents/${documentId}`)
       })
     
     toast.promise(promise, {
@@ -85,7 +85,8 @@ export const Item = ({
     
     if (!id) return;
 
-    const promise = archive({ id });
+    const promise = archive({ id })
+      .then(() => router.push("/documents"));
     
     toast.promise(promise, {
       loading: "Moving to trash...",
@@ -120,14 +121,15 @@ export const Item = ({
                 {documentIcon}
               </div>
             ) : (
-              <Icon className="h-[18px] shrink-0 text-muted-foreground mr-2" />
+              <Icon className="w-[18px] h-[18px] shrink-0 text-muted-foreground mr-2" />
             )}
             <span className="truncate">
               {label}
             </span>
             {isSearch && (
               <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                <span className="text-xs">⌘</span>K
+                <span className="text-xs">CTRL</span>K
+                {/* ⌘ */}
               </kbd>
             )}
             {!!id && (
@@ -135,11 +137,17 @@ export const Item = ({
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     onClick={(e) => e.stopPropagation()}
-                    asChild
+                    // asChild
                   >
                     <div
                       role="button"
-                      className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+                      className="hidden md:group-hover:block h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+                    >
+                      <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
+                    </div>
+                    <div
+                      role="button"
+                      className="block md:hidden h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
                     >
                       <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
                     </div>
@@ -163,7 +171,14 @@ export const Item = ({
                 <div
                   role="button"
                   onClick={onCreate}
-                  className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+                  className="hidden md:group-hover:block h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+                >
+                  <Plus className="w-4 h-4 text-muted-foreground" />
+                </div>
+                <div
+                  role="button"
+                  onClick={onCreate}
+                  className="opacity-100 md:hidden h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
                 >
                   <Plus className="w-4 h-4 text-muted-foreground" />
                 </div>
