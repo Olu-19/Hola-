@@ -15,8 +15,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { MoreVertical, Trash } from "lucide-react";
+import { Lightbulb, MoreVertical, Trash } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface MenuProps {
